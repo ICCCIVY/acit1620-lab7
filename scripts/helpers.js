@@ -22,66 +22,77 @@ export function getCard() {
     /**
      * Get answer card name
      */
+    return getCardNode().alt;
 }
 
 export function getCardNode() {
     /**
      * Get answer card image node
      */
+    return document.querySelector('img');
 }
 
 export function getCheckbox() {
     /**
      * Get checkbox node
      */
+    return document.querySelector('#tries-checkbox');
 }
 
 export function getContinueBtn() {
     /**
      * Get 'continue/try again' button node
      */
+    return document.querySelector('#continue');
 }
 
 export function getNumberInput() {
     /**
      * Get number input node
      */
+    return document.querySelector('input[type="number"]');
 }
 
 export function getOutput() {
     /**
      * Get output node
      */
+    return document.querySelector('output');
 }
 
 export function getPanel() {
     /**
      * Get card selection panel node
      */
+    return document.querySelector('main > div:last-child');
 }
 
 export function getTiles() {
     /**
      * Get the card tiles
      */
+    return document.querySelectorAll('.tiles input');
 }
 
 export function getTries() {
     /**
-     * Get the current value of tries
+     * Get the current value of number of guesses
      */
+    return getNumberInput().value;
 }
 
 export function getRestartBtn() {
     /**
      * Get 'restart' button node
      */
+    return document.querySelector('#restart');
 }
 
 export function getShowBtn() {
     /**
      * Get 'show' button node
      */
+    return document.querySelector('#show-btn');
 }
 
 export function setCard() {
@@ -102,17 +113,31 @@ export function setCard() {
         'queen of spades'
     ];
 
+    const idx = Math.floor(Math.random() * 9);
+    const card = cards[idx];
+    const cardNode = getCardNode();
+    const path = card.split(' ').join('_');
+    cardNode.src = `images/${path}.svg`;
+    cardNode.alt = card;
+
     // hide the card
+    cardNode.classList.toggle('hidden', true);
 
      // cancel the animation
+     cardNode.classList.remove('fade'); 
+     cardNode.parentNode.classList.remove('flip')
 }
 
 export function showCard() {
     /**
      * Show the answer card and disable the 'show' button
      */
+    getCardNode().classList.toggle('hidden', false);
+    getShowBtn().toggleAttribute('disabled', true);
 
     // animate the card
+    getCardNode().classList.add('fade');
+    getCardNode().parentNode.classList.add('flip');
 
 }
 
@@ -123,5 +148,12 @@ export function toggleInputState(e) {
      * The information is available in the event object passed to the
      * function at call time.
      */
+    getNumberInput().toggleAttribute('disabled', !e.target.checked);
+    // if (e.target.checked === true) {
+    //     getNumberInput().removeAttribute('disabled');
+    // } else {
+    //     getNumberInput().setAttribute('disabled');
+    // }
+
 }
 
